@@ -13,26 +13,15 @@
 			$this->_app_secret = $app_secret;			
 		}
 		
-		public function getLoginUrl($network){
-		
-		//	$url = $this->_login_url.'/'.$network.'?app_id='.$this->_app_id.'&gurl=true';
-		
-		//	$response = $this->makeRequest($url);
-			
-		//	return !empty($response['login_url']) ? $response['login_url'] : $response ;
-		
+		public function getLoginUrl($network){	
 			return $this->_login_url.'/'.$network.'?app_id='.$this->_app_id;
 		}
 		
 		public function getInfo($network,$token){
 		
-			//$data = $this->getDataToSign($network,'getinfo',$token);
-			//$sig = $this->signRequest($data,$this->_app_secret);
+			$bodyParams = $this->getParams($network,'getinfo',$token);
 			
-			//$url = $this->_service_url.'/'.$this->_network.'/getinfo?sk_token='.$this->_sk_token.'&sig='.$sig;
-			$url = $this->_service_url.'/'.$network.'/getinfo?sk_token='.$token;
-			
-			$response = $this->makeRequest($url);
+			$response = $this->makeRequest($bodyParams);
 			
 			return $response;
 		
@@ -40,13 +29,9 @@
 		
 		public function getFriends($network,$token){
 		
-			//$data = $this->getDataToSign($network,'getfriend',$token);
-			//$sig = $this->signRequest($data,$this->_app_secret);
-		
-			//$url = $this->_service_url.'/'.$this->_network.'/getfriend?sk_token='.$this->_sk_token.'&sig='.$sig;
-			$url = $this->_service_url.'/'.$network.'/getfriend?sk_token='.$token;
+			$bodyParams = $this->getParams($network,'getfriend',$token);
 			
-			$response = $this->makeRequest($url);
+			$response = $this->makeRequest($bodyParams);
 			
 			return $response;
 			
@@ -65,13 +50,9 @@
 			if($network == 'linkedin')
 				$params['type'] = 'comment';
 	
-			//$data = $this->getDataToSign($network,'poststream',$token,$params);
-			//$sig = $this->signRequest($data,$this->_app_secret);
-		
-			//$url = $this->_service_url.'/'.$this->_network.'/poststream?sk_token='.$this->_sk_token.'&sig='.$sig;
-			$url = $this->_service_url.'/'.$network.'/poststream?sk_token='.$token;
+			$bodyParams = $this->getParams($network,'poststream',$token,$params);
 			
-			$response = $this->makeRequest($url,$params,true);
+			$response = $this->makeRequest($bodyParams);
 			
 			return $response;
 		}
@@ -92,18 +73,14 @@
 				$params['title'] = $title;
 			}
 			
-			//$data = $this->getDataToSign($network,'sendmessage',$token,$params);
-			//$sig = $this->signRequest($data,$this->_app_secret);
+			$bodyParams = $this->getParams($network,'sendmessage',$token,$params);
 			
-			//$url = $this->_service_url.'/'.$this->_network.'/sendmessage?sk_token='.$this->_sk_token.'&sig='.$sig;
-			$url = $this->_service_url.'/'.$network.'/sendmessage?sk_token='.$token;
-			
-			$response = $this->makeRequest($url,$params,true);
+			$response = $this->makeRequest($bodyParams);
 			
 			return $response;
 		}
 		
-		private function getDataToSign($network,$method,$token,$params=''){
+		private function getParams($network,$method,$token,$params=''){
 			$data = array(
 				'network' => $network,
 				'sk_token' => $token,
@@ -116,27 +93,22 @@
 			return $data;
 		}
 		
-		private function makeRequest($url,$params='',$post = false){
+		private function makeRequest($params){
+	
+			//TODO: sign request here
+			//$this->signRequest($params)
+	
+			$queryParams = http_build_query($params);
 		
-			if(!$post){
-				$context = stream_context_create(array(
-					'http' => array(
-						'method' => 'GET',
-						'ignore_errors' => true,
-					),
-				));
-			}else{
-				$context = stream_context_create(array(
-					'http' => array(
-						'method' => 'POST',
-						'header' => 'Content-type: application/x-www-form-urlencoded',
-						'content' => http_build_query($params),
-						'ignore_errors' => true,
-					),
-				));
-			}
+			$context = stream_context_create(array(
+				'http' => array(
+					'method' => 'POST',
+					'header' => 'Content-type: application/x-www-form-urlencoded',
+					'content' => $queryParams,
+				),
+			));
 			
-			$response = file_get_contents($url,false,$context);
+			$response = file_get_contents($this->_service_url,false,$context);
 			
 			return json_decode($response,true);
 		
