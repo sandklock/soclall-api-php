@@ -17,9 +17,9 @@
 			return $this->_login_url.'/'.$network.'?app_id='.$this->_app_id;
 		}
 		
-		public function getInfo($network,$token){
+		public function getUser($token){
 		
-			$bodyParams = $this->getParams($network,'getinfo',$token);
+			$bodyParams = $this->getParams('getuser',$token);
 			
 			$response = $this->makeRequest($bodyParams);
 			
@@ -27,9 +27,9 @@
 		
 		}
 		
-		public function getFriends($network,$token){
+		public function getFriends($token){
 		
-			$bodyParams = $this->getParams($network,'getfriend',$token);
+			$bodyParams = $this->getParams('getfriends',$token);
 			
 			$response = $this->makeRequest($bodyParams);
 			
@@ -50,7 +50,7 @@
 			if($network == 'linkedin')
 				$params['type'] = 'comment';
 	
-			$bodyParams = $this->getParams($network,'poststream',$token,$params);
+			$bodyParams = $this->getParams('poststream',$token,$params);
 			
 			$response = $this->makeRequest($bodyParams);
 			
@@ -73,17 +73,16 @@
 				$params['title'] = $title;
 			}
 			
-			$bodyParams = $this->getParams($network,'sendmessage',$token,$params);
+			$bodyParams = $this->getParams('sendmessage',$token,$params);
 			
 			$response = $this->makeRequest($bodyParams);
 			
 			return $response;
 		}
 		
-		private function getParams($network,$method,$token,$params=''){
+		private function getParams($method,$token,$params=''){
 			$data = array(
-				'network' => $network,
-				'sk_token' => $token,
+				'token' => $token,
 				'method' => $method,
 			);
 			
