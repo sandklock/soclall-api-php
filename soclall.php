@@ -13,7 +13,7 @@
 			$this->_app_secret = $app_secret;			
 		}
 		
-		public function getLoginUrl($network){
+		public function getLoginUrl($network,$callback){
 
 			$param = array(
 				'app_id' => $network,
