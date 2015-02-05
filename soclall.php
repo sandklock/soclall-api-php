@@ -13,8 +13,14 @@
 			$this->_app_secret = $app_secret;			
 		}
 		
-		public function getLoginUrl($network){	
-			return $this->_login_url.'/'.$network.'?app_id='.$this->_app_id;
+		public function getLoginUrl($network){
+
+			$param = array(
+				'app_id' => $network,
+				'callback' => urlencode($callback),
+			);
+		
+			return $this->_login_url.'/'.$network.'?'.http_build_query($param);
 		}
 		
 		public function getUser($token){
