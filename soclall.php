@@ -4,8 +4,8 @@
 	
 		private $_app_id;
 		private $_app_secret;
-		private $_login_url = 'http://api.soclall.com/login';
-		private $_service_url = 'http://api.soclall.com/service';
+		private $_login_url = 'http://test.soclall.com/login';
+		private $_service_url = 'http://test.soclall.com/';
 	
 		public function __construct($app_id,$app_secret){
 			
@@ -16,8 +16,8 @@
 		public function getLoginUrl($network,$callback){
 
 			$param = array(
-				'app_id' => $network,
-				'callback' => urlencode($callback),
+				'app_id' => $this->_app_id,
+				'callback' => $callback,
 			);
 		
 			return $this->_login_url.'/'.$network.'?'.http_build_query($param);
@@ -25,7 +25,7 @@
 		
 		public function getUser($token){
 		
-			$bodyParams = $this->getParams('getuser',$token);
+			$bodyParams = $this->getParams('user',$token);
 			
 			$response = $this->makeRequest($bodyParams);
 			
@@ -35,7 +35,7 @@
 		
 		public function getFriends($token){
 		
-			$bodyParams = $this->getParams('getfriends',$token);
+			$bodyParams = $this->getParams('friends',$token);
 			
 			$response = $this->makeRequest($bodyParams);
 			
@@ -43,27 +43,20 @@
 			
 		}
 		
-		public function postStream($network,$token,$message){
+		public function postStream($token,$message){
 		
 			$params = array(
 				'message' => $message,
 			);
-			
-			if($network == 'plurk')
-				$params['qualifier'] = 'shares';
-			if($network == 'tumblr')
-				$params['type'] = 'text';
-			if($network == 'linkedin')
-				$params['type'] = 'comment';
 	
-			$bodyParams = $this->getParams('poststream',$token,$params);
+			$bodyParams = $this->getParams('publish',$token,$params);
 			
 			$response = $this->makeRequest($bodyParams);
 			
 			return $response;
 		}
 		
-		public function sendMessage($network,$token,$message,$friends,$title = ''){
+		public function sendMessage($token,$message,$friends,$title = ''){
 		
 			if(!is_array($friends))
 				exit('wrong type . type of second parameter must be an array');
@@ -72,14 +65,11 @@
 				'friend_id' => implode(',',$friends),
 				'message' => $message,
 			);
-		
-			if($network == 'linkedin' || $network == 'tumblr'){
-				if(empty($title))
-					exit('sending message on '.$network.' is required title parameter');
-				$params['title'] = $title;
-			}
 			
-			$bodyParams = $this->getParams('sendmessage',$token,$params);
+			if(!empty($title))
+				$params['title'] = $title;
+			
+			$bodyParams = $this->getParams('message',$token,$params);
 			
 			$response = $this->makeRequest($bodyParams);
 			
