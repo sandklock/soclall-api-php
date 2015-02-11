@@ -84,13 +84,14 @@
 			//TODO: sign request here
 			//$this->signRequest($params)
 	
-			$queryParams = http_build_query($params);
+			$sig = $this->signRequest($path,$params);
+			$params['sig'] = $sig;
 		
 			$context = stream_context_create(array(
 				'http' => array(
 					'method' => 'POST',
 					'header' => 'Content-type: application/x-www-form-urlencoded',
-					'content' => $queryParams,
+					'content' => http_build_query($params),
 				),
 			));
 			
@@ -102,7 +103,24 @@
 		
 		}
 		
-		private function signRequest($data){
+		private function signRequest($path,$data){
+		
+			switch($path){
+				case 'user':
+					$method = 'getuser';
+				break;
+				case 'friends':
+					$method = 'getfriends';
+				break;
+				case 'publish':
+					$method = 'poststream';
+				break;
+				case 'message':
+					$method = 'sendmessage';
+				break;
+			}
+		
+			$data['method'] = $method;
 		
 			ksort($data);
 		
