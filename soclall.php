@@ -4,8 +4,8 @@
 	
 		private $_app_id;
 		private $_app_secret;
-		private $_login_url = 'http://test.soclall.com/login';
-		private $_service_url = 'http://test.soclall.com/';
+		private $_login_url = 'http://api.soclall.com/login';
+		private $_service_url = 'http://api.soclall.com/';
 	
 		public function __construct($app_id,$app_secret){
 			
