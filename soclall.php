@@ -13,11 +13,12 @@
 			$this->_app_secret = $app_secret;			
 		}
 		
-		public function getLoginUrl($network,$callback){
+		public function getLoginUrl($network,$callback,$scope = 'user'){
 
 			$param = array(
 				'app_id' => $this->_app_id,
 				'callback' => $callback,
+				'scope' => $scope,
 			);
 		
 			return $this->_login_url.'/'.$network.'?'.http_build_query($param);
@@ -25,9 +26,11 @@
 		
 		public function getUser($token){
 		
-			$bodyParams = $this->getParams('user',$token);
+			$params = array(
+				'token' => $token,
+			);
 			
-			$response = $this->makeRequest($bodyParams);
+			$response = $this->makeRequest('user',$params);
 			
 			return $response;
 		
@@ -35,9 +38,11 @@
 		
 		public function getFriends($token){
 		
-			$bodyParams = $this->getParams('friends',$token);
+			$params = array(
+				'token' => $token,
+			);
 			
-			$response = $this->makeRequest($bodyParams);
+			$response = $this->makeRequest('friends',$params);
 			
 			return $response;
 			
@@ -46,12 +51,11 @@
 		public function postStream($token,$message){
 		
 			$params = array(
+				'token' => $token,
 				'message' => $message,
 			);
-	
-			$bodyParams = $this->getParams('publish',$token,$params);
 			
-			$response = $this->makeRequest($bodyParams);
+			$response = $this->makeRequest('publish',$params);
 			
 			return $response;
 		}
@@ -62,6 +66,7 @@
 				exit('wrong type . type of second parameter must be an array');
 		
 			$params = array(
+				'token' => $token,
 				'friend_id' => implode(',',$friends),
 				'message' => $message,
 			);
@@ -69,26 +74,12 @@
 			if(!empty($title))
 				$params['title'] = $title;
 			
-			$bodyParams = $this->getParams('message',$token,$params);
-			
-			$response = $this->makeRequest($bodyParams);
+			$response = $this->makeRequest('message',$params);
 			
 			return $response;
 		}
 		
-		private function getParams($method,$token,$params=''){
-			$data = array(
-				'token' => $token,
-				'method' => $method,
-			);
-			
-			if(!empty($params))
-				$data = array_merge($data,$params);
-			
-			return $data;
-		}
-		
-		private function makeRequest($params){
+		private function makeRequest($path,$params){
 	
 			//TODO: sign request here
 			//$this->signRequest($params)
@@ -103,7 +94,9 @@
 				),
 			));
 			
-			$response = file_get_contents($this->_service_url,false,$context);
+			$api_url = $this->_service_url.$path;
+			
+			$response = file_get_contents($api_url,false,$context);
 			
 			return json_decode($response,true);
 		
