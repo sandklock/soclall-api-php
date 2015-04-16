@@ -91,9 +91,6 @@
 		
 		private function makeRequest($path,$params){
 	
-			//TODO: sign request here
-			//$this->signRequest($params)
-	
 			$sig = $this->signRequest($params);
 			$params['sig'] = $sig;
 
