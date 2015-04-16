@@ -1,5 +1,5 @@
 <?php
-
+	
 	class SoclAll{
 	
 		private $_app_id;
@@ -10,7 +10,7 @@
 		public function __construct($app_id,$app_secret){
 			
 			$this->_app_id = $app_id;
-			$this->_app_secret = $app_secret;			
+			$this->_app_secret = $app_secret;
 		}
 		
 		public function getLoginUrl($network,$callback,$scope = 'user'){
@@ -79,14 +79,24 @@
 			return $response;
 		}
 		
+		public function summary(){
+			$params = array(
+				'app_id' => $this->_app_id,
+			);
+			
+			$response = $this->makeRequest('summary',$params);
+			
+			return $response;
+		}
+		
 		private function makeRequest($path,$params){
 	
 			//TODO: sign request here
 			//$this->signRequest($params)
 	
-			$sig = $this->signRequest($path,$params);
+			$sig = $this->signRequest($params);
 			$params['sig'] = $sig;
-		
+
 			$context = stream_context_create(array(
 				'http' => array(
 					'method' => 'POST',
@@ -103,24 +113,7 @@
 		
 		}
 		
-		private function signRequest($path,$data){
-		
-			switch($path){
-				case 'user':
-					$method = 'getuser';
-				break;
-				case 'friends':
-					$method = 'getfriends';
-				break;
-				case 'publish':
-					$method = 'poststream';
-				break;
-				case 'message':
-					$method = 'sendmessage';
-				break;
-			}
-		
-			$data['method'] = $method;
+		private function signRequest($data){
 		
 			ksort($data);
 		
