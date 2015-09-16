@@ -1,0 +1,23 @@
+{
+    "name": "soclall/soclall",
+    "type": "library",
+    "description": "SoclAll is one API for all networks",
+    "keywords": ["social login", "networks", "publish", "facebook"],
+    "homepage": "https://soclall.com",
+    "authors": [
+        {
+            "name": "Sandklock",
+            "email": "admin@sandklock.com",
+            "homepage": "www.sandklock.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Soclall": "src"
+        }
+    }
+}

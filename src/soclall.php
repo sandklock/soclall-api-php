@@ -1,5 +1,6 @@
 <?php
-	
+	namespace Soclall;
+    
 	class SoclAll{
 	
 		private $_app_id;
