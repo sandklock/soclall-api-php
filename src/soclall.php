@@ -1,11 +1,12 @@
 <?php
-	
+	namespace Soclall;
+    
 	class SoclAll{
 	
 		private $_app_id;
 		private $_app_secret;
-		private $_login_url = 'http://api.soclall.com/login';
-		private $_service_url = 'http://api.soclall.com/';
+		private $_login_url = 'https://api2.soclall.com/login';
+		private $_service_url = 'https://api2.soclall.com/';
 	
 		public function __construct($app_id,$app_secret){
 			
