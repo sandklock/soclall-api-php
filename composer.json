@@ -3,12 +3,12 @@
     "type": "library",
     "description": "SoclAll is one API for all networks",
     "keywords": ["soclall", "socialall", "login", "posting", "publish", "friend"],
-    "homepage": "https://soclall.com",
+    "homepage": "https://github.com/sandklock/soclall-api-php",
     "authors": [
         {
             "name": "SandKlock",
             "email": "support@sandklock.com",
-            "homepage": "www.sandklock.com",
+            "homepage": "http://www.sandklock.com",
             "role": "Developer"
         }
     ],
