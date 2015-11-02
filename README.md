@@ -87,4 +87,4 @@ If you encounter any bugs or issues, feel free to open an issue at [github](http
 
 ## Credits
 
-[SandKlock](https://www.socialall.io)
+[SandKlock](http://www.sandklock.com)
