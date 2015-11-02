@@ -24,7 +24,7 @@ error_log($sa.getLoginUrl('facebook', 'http://yourdomain.com/callback'));
 ## API
 
 ~~~ php
-getLoginUrl($network, $callback_url)
+$sa.getLoginUrl($network, $callback_url)
 ~~~
 
   * `$network` -- `string` -- see [networks](#networks)
@@ -32,21 +32,21 @@ getLoginUrl($network, $callback_url)
   * returns `string` login url
 
 ~~~ php
-getUser($token, $callback)
+$sa.getUser($token, $callback)
 ~~~
 
   * `$token` -- `string`
   * `$callback` -- `function($err, $user)`
 
 ~~~ php
-getFriends($token, $callback)
+$sa.getFriends($token, $callback)
 ~~~
 
   * `$token` -- `string` -- token given by SocialAll
   * `$callback` -- `function(err, friends)`
 
 ~~~ php
-postStream($token, $message, $callback)
+$sa.postStream($token, $message, $callback)
 ~~~
 
   * `$token` -- `string`
@@ -54,7 +54,7 @@ postStream($token, $message, $callback)
   * `$callback` -- `function($err)`
 
 ~~~ php
-sendMessage($token, $message, $friends, $title, $callback)
+$sa.sendMessage($token, $message, $friends, $title, $callback)
 ~~~
 
   * `$token` -- `string`
