@@ -18,13 +18,13 @@ require_once 'vendor/autoload.php';
 
 $sa = new SocialAll\SocialAll($app_id, $secret_key);
 
-error_log($sa.getLoginUrl('facebook', 'http://yourdomain.com/callback'));
+error_log($sa->getLoginUrl('facebook', 'http://yourdomain.com/callback'));
 ~~~
 
 ## API
 
 ~~~ php
-$sa.getLoginUrl($network, $callback_url)
+$sa->getLoginUrl($network, $callback_url)
 ~~~
 
   * `$network` -- `string` -- see [networks](#networks)
@@ -32,21 +32,21 @@ $sa.getLoginUrl($network, $callback_url)
   * returns `string` login url
 
 ~~~ php
-$sa.getUser($token, $callback)
+$sa->getUser($token, $callback)
 ~~~
 
   * `$token` -- `string`
   * `$callback` -- `function($err, $user)`
 
 ~~~ php
-$sa.getFriends($token, $callback)
+$sa->getFriends($token, $callback)
 ~~~
 
   * `$token` -- `string` -- token given by SocialAll
   * `$callback` -- `function(err, friends)`
 
 ~~~ php
-$sa.postStream($token, $message, $callback)
+$sa->postStream($token, $message, $callback)
 ~~~
 
   * `$token` -- `string`
@@ -54,7 +54,7 @@ $sa.postStream($token, $message, $callback)
   * `$callback` -- `function($err)`
 
 ~~~ php
-$sa.sendMessage($token, $message, $friends, $title, $callback)
+$sa->sendMessage($token, $message, $friends, $title, $callback)
 ~~~
 
   * `$token` -- `string`
