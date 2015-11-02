@@ -27,41 +27,41 @@ error_log($sa->getLoginUrl('facebook', 'http://yourdomain.com/callback'));
 $sa->getLoginUrl($network, $callback_url)
 ~~~
 
-  * `$network` -- `string` -- see [networks](#networks)
-  * `$callback_url` -- `string`
+  * `$network` — `string` — see [networks](#networks)
+  * `$callback_url` — `string`
   * returns `string` login url
 
 ~~~ php
 $sa->getUser($token, $callback)
 ~~~
 
-  * `$token` -- `string`
-  * `$callback` -- `function($err, $user)`
+  * `$token` — `string`
+  * `$callback` — `function($err, $user)`
 
 ~~~ php
 $sa->getFriends($token, $callback)
 ~~~
 
-  * `$token` -- `string` -- token given by SocialAll
-  * `$callback` -- `function(err, friends)`
+  * `$token` — `string` — token given by SocialAll
+  * `$callback` — `function(err, friends)`
 
 ~~~ php
 $sa->postStream($token, $message, $callback)
 ~~~
 
-  * `$token` -- `string`
-  * `$message` -- `string`
-  * `$callback` -- `function($err)`
+  * `$token` — `string`
+  * `$message` — `string`
+  * `$callback` — `function($err)`
 
 ~~~ php
 $sa->sendMessage($token, $message, $friends, $title, $callback)
 ~~~
 
-  * `$token` -- `string`
-  * `$message` -- `string`
-  * `$friends` -- `array` -- list of friend's IDs
-  * `$title` -- `string`
-  * `$callback` -- `function($err)`
+  * `$token` — `string`
+  * `$message` — `string`
+  * `$friends` — `array` — list of friend's IDs
+  * `$title` — `string`
+  * `$callback` — `function($err)`
 
 ## Networks
 
