@@ -77,8 +77,8 @@ class SocialAll
 
 		return $response;
 	}
-    
-    public function getPages($token){
+	
+	public function getPages($token){
 		
 		$params = array('token' => $token);
 			
@@ -86,15 +86,15 @@ class SocialAll
 			
 		return $response;
 	}
-        
-    public function postPage($token, $page_id, $page_token, $message){
+		
+	public function postPage($token, $page_id, $page_token, $message){
 		
 		$params = array(
-          'token' => $token,
-          'page_id' => $page_id,
-          'page_token' => $page_token,
-          'message' => $message
-        );
+			'token' => $token,
+			'page_id' => $page_id,
+			'page_token' => $page_token,
+			'message' => $message
+		);
 			
 		$response = $this->makeRequest('publish_page',$params);
 			
